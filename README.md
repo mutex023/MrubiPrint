@@ -3,7 +3,9 @@ Alternative solution to AirPrint for printing from iOS and android devices
 to any printer connected to a windows PC
 
 1. Ensure your printer is connected to your PC and switched on.
-3. Create a folder named “MrubiPrint” under C:\
+2. Create a folder named “MrubiPrint” under C:\
+3. Download MrubiPrint.exe from here if you dont want to go through the hassle of compilation!
+https://drive.google.com/open?id=1WsRo_4bI8dGJ_Rmxa0b3dJfR9DX53JeN
 4. Copy MrubiPrint.exe to the START>Program Files > Startup folder
 6. Install an FTP server application like FileZilla, setup the server so that 
 c:\MrubiPrint is set as the root folder of the server. Give read, write and delete permissions to the folder in FTP server settings.
