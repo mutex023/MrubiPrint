@@ -14,3 +14,7 @@ c:\MrubiPrint is set as the root folder of the server. Give read, write and dele
 9. Connect to your windows FTP server from the app
 10. That’s it, from now on you just need to copy a file (supported types for printing are .doc, .docx, .txt, .pdf, .xls, .xlsx, .ppt, .pptx, .jpg, .png) over FTP from your device to the PC  at c:\MrubiPrint and within 5 secs the document printing will start.
 11. After printing the document is deleted from c:\MrubiPrint
+
+NOTE: For pdf printing to work smoothly, make sure foxit pdf reader is installed on your windows
+pc and set as the default app for opening pdf files.
+This is because adobe reader demands manual intervention for printing pdfs
