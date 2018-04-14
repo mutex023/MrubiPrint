@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 		 	sprintf(str, "c:\\MrubiPrint\\%s", fname);
 		 	sprintf(copystr, ".\\%s", fname);
 		 	CopyFile(str, copystr, FALSE);
-            DeleteFile(str);
+                        DeleteFile(str);
 			ShellExecute(NULL, "print", copystr, NULL, NULL, SW_HIDE);
 			Sleep(30000);
 			DeleteFile(copystr);
