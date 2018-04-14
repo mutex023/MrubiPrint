@@ -16,7 +16,7 @@ note : you might have to link the libwinmm.o(devcpp) file or the winmm.lib (vc++
 #include <winuser.h>
 #include <mmsystem.h>
 
-SERVICE_STATUS          ServiceStatus; 
+SERVICE_STATUS          ServiceStatus;
 SERVICE_STATUS_HANDLE   hStatus; 
 
 
@@ -55,25 +55,17 @@ char *GetFileFromDir(char *dirname)
    return NULL;
 }
 
-int main() 
+int main(int argc, char *argv[])
 {
 	HFILE hf = HFILE_ERROR, chf = HFILE_ERROR;
 	OFSTRUCT fdata;
 	DWORD size, outsize;
 	unsigned char *buf = NULL;
 	char str[256] = {0};
+	char copystr[256] = {0};
 	//char dbg[256] = {0};
 	char *fname = NULL;
 	DWORD cursize, prevsize;
-
-   /*SERVICE_TABLE_ENTRY ServiceTable[2];
-   ServiceTable[0].lpServiceName = "MrubiPrint";
-   ServiceTable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)ServiceMain;
-
-   ServiceTable[1].lpServiceName = NULL;
-   ServiceTable[1].lpServiceProc = NULL;
-   // Start the control dispatcher thread for our service
-   StartServiceCtrlDispatcher(ServiceTable); */
 
    while (1) {
          Sleep(3000);
@@ -103,97 +95,13 @@ int main()
 			//sprintf(str, "File: 'c:\\MrubiPrint\\%s'; Size: %d bytes", fname, cursize);
 		 	//MessageBox(NULL, str, "Mrubi, Printing...", MB_OK);
 		 	sprintf(str, "c:\\MrubiPrint\\%s", fname);
-			ShellExecute(NULL, "print", str, NULL, NULL, SW_HIDE);
-			Sleep(5000);
+		 	sprintf(copystr, ".\\%s", fname);
+		 	CopyFile(str, copystr, FALSE);
             DeleteFile(str);
+			ShellExecute(NULL, "print", copystr, NULL, NULL, SW_HIDE);
+			Sleep(30000);
+			DeleteFile(copystr);
          }
    }
    return 0;  
 }
-
-/*
-void ServiceMain(int argc, char** argv) 
-{ 
-   HFILE hf = HFILE_ERROR;
-   OFSTRUCT fdata;
-   DWORD size;
-   unsigned char *buf = NULL;
-   
-   MessageBox(
-        NULL,
-        "MrubiPrint entry",
-        "Mrubi",
-        MB_OK
-    );
-   ServiceStatus.dwServiceType = 
-      SERVICE_WIN32; 
-   ServiceStatus.dwCurrentState = 
-      SERVICE_START_PENDING; 
-   ServiceStatus.dwControlsAccepted   =  
-      SERVICE_ACCEPT_STOP | 
-      SERVICE_ACCEPT_SHUTDOWN;
-   ServiceStatus.dwWin32ExitCode = 0; 
-   ServiceStatus.dwServiceSpecificExitCode = 0; 
-   ServiceStatus.dwCheckPoint = 0; 
-   ServiceStatus.dwWaitHint = 0; 
-   
-   hStatus = RegisterServiceCtrlHandler(
-      "", 
-      (LPHANDLER_FUNCTION)ControlHandler); 
-   if (hStatus == (SERVICE_STATUS_HANDLE)0) {
-       MessageBox(
-            NULL,
-            "Failed to register service",
-            "Mrubi",
-            MB_OK
-        );
-        return; 
-   }
-   ServiceStatus.dwCurrentState = SERVICE_RUNNING; 
-   SetServiceStatus (hStatus, &ServiceStatus);
-   int n = 0;
-   while (ServiceStatus.dwCurrentState == SERVICE_RUNNING) {
-         Sleep(2000); 
-         hf = OpenFile("c:\\MrubiPrint\\vayavya", &fdata, OF_READ);
-         if (hf != HFILE_ERROR) {
-            size = GetFileSize((void *)hf, NULL);
-            buf = (unsigned char *)malloc(size);
-            if (buf) {
-                 if (ReadFile((void *)hf, buf, size, NULL, NULL)) {
-                    RawDataToPrinter("Canon MF3010", buf, size);
-                    CloseHandle((void *)hf);
-                    DeleteFile("c:\\MrubiPrint\\vayavya");
-                }
-            }
-         }
-   }
-}
-
-void ControlHandler(DWORD request) 
-{ 
-   switch(request) 
-   { 
-      case SERVICE_CONTROL_STOP: 
-        
-         ServiceStatus.dwWin32ExitCode = 0; 
-         ServiceStatus.dwCurrentState = SERVICE_STOPPED; 
-         SetServiceStatus (hStatus, &ServiceStatus);
-         return; 
- 
-      case SERVICE_CONTROL_SHUTDOWN: 
-         
-         ServiceStatus.dwWin32ExitCode = 0; 
-         ServiceStatus.dwCurrentState = SERVICE_STOPPED; 
-         SetServiceStatus (hStatus, &ServiceStatus);
-         return; 
-        
-      default:
-         break;
-    } 
- 
-    
-    SetServiceStatus (hStatus, &ServiceStatus);
- 
-    return; 
-}
-*/
